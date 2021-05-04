@@ -1,0 +1,24 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="Widget.Button.Borderless" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="autoSizeTextType">uniform</item>
+        <item name="android:theme">@style/AppTheme</item>
+    </style>
+
+    <style name="Widget.ActionBar.Transparent" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@color/transparent</item>
+
+    </style>
+
+</resources>

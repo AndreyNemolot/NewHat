@@ -1,0 +1,8 @@
+/*
+ * Экспериментальный режим Kotlin Android Extensions нельзя включить из kts-файлов
+ * https://github.com/gradle/kotlin-dsl/issues/644
+ */
+androidExtensions {
+    experimental = true
+    defaultCacheImplementation = "SPARSE_ARRAY"
+}

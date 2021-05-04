@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Hat</string>
+    <string name="remove">Удалить</string>
+    <string name="edit">Редактировать</string>
+    <string name="players">Игроки</string>
+    <string name="words">Слова</string>
+    <string name="Commands">Команды</string>
+    <string name="startGame">Начать игру</string>
+    <string name="add">Добавить</string>
+
+</resources>
