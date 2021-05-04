@@ -1,19 +1,22 @@
 package com.example.presentation.screens.addPeopleScreen
 
 import SwipeGestures.SwipeGestureManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentAddPeopleScreenBinding
 import com.example.presentation.screens.addPeopleScreen.epoxy.EpoxyPeopleController
+import com.example.presentation.screens.addWordsScreen.AddWordsScreenFragment
 import com.example.presentation.screens.base.BaseFragment
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 
@@ -32,17 +35,48 @@ class AddPeopleScreenFragment : BaseFragment(R.layout.fragment_add_people_screen
         binding = FragmentAddPeopleScreenBinding.bind(view)
         viewModel = obtainViewModel()
         binding.recycleView.setController(controller)
-        val recyclerAdapterSwipeGestures = SwipeGestureManager(SwipeGestureManager.SwipeCallbackRight {
-            Toast.makeText(requireContext(), "ASD", Toast.LENGTH_SHORT).show()
-        })
+        val recyclerAdapterSwipeGestures =
+            SwipeGestureManager(SwipeGestureManager.SwipeCallbackRight {
+                removePlayer(it)
+            })
+        recyclerAdapterSwipeGestures.apply {
+            setBackgroundColorLeft(ColorDrawable(Color.RED))
+            setIconRight(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    android.R.drawable.ic_menu_delete
+                )
+            )
+        }
         val itemTouchHelper = ItemTouchHelper(recyclerAdapterSwipeGestures)
         itemTouchHelper.attachToRecyclerView(binding.recycleView)
 
         launchWhenCreated {
-            viewModel.stateFlow.collect {
+            viewModel.stateFlow.onEach {
                 updateState(it)
-            }
+            }.launchIn(this)
+            viewModel.commandFlow.onEach {
+                handleCommand(it)
+            }.launchIn(this)
         }
+
+        binding.toolbar.setNavigationOnClickListener {
+            router.exit()
+        }
+        binding.toolbar.title = "PLAYERS"
+
+    }
+
+    private fun handleCommand(playerCommand: AddPlayerCommand) {
+        when (playerCommand) {
+            AddPlayerCommand.RemovePlayerError -> {}
+            AddPlayerCommand.AddPlayerError -> {}
+        }
+    }
+
+    private fun removePlayer(idx: Int) {
+        // Вычитаем единицу, так как первый элемент в списке это не игрок
+        viewModel.removePeople(idx - 1)
     }
 
     private fun updateState(stateAddPeople: AddPeopleScreenState) {
@@ -51,6 +85,10 @@ class AddPeopleScreenFragment : BaseFragment(R.layout.fragment_add_people_screen
 
     override fun addPlayer(name: String) {
         viewModel.addPlayer(name)
+    }
+
+    override fun addWord(name: String) {
+        router.navigateTo(AddWordsScreenFragment.Screen(name))
     }
 
     @Parcelize

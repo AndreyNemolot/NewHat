@@ -2,7 +2,7 @@ package com.example.domain.interactor
 
 import com.example.data.people.PeopleRepository
 import com.example.domain.model.Player
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class PlayerInteractor @Inject constructor(
@@ -11,21 +11,24 @@ class PlayerInteractor @Inject constructor(
 
     val state: Flow<List<Player>> = peopleRepository.state
 
-    fun getPeople(): List<Player> {
-        return peopleRepository.getPeople()
+    fun getPlayer(): List<Player> {
+        return peopleRepository.getPlayers()
     }
 
-    fun addPeople(playerName: Player) {
+    fun addPlayer(playerName: Player) {
         peopleRepository.addPeople(playerName)
     }
 
-    fun removePeople(playerName: Player) {
+    fun removePlayer(playerName: Player) {
         peopleRepository.removePeople(playerName)
     }
 
-    fun getPeopleSize(): Int {
+    fun getPlayerSize(): Int {
         return peopleRepository.getPeopleSize()
     }
 
+    fun getPlayerByName(playerName: String): Player {
+        return peopleRepository.getPlayerByName(playerName)
+    }
 
 }

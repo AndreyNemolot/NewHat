@@ -2,18 +2,13 @@ package com.example.presentation.screens.gameConfigScreen
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentGameConfigScreenBinding
 import com.example.presentation.screens.addPeopleScreen.AddPeopleScreenFragment
 import com.example.presentation.screens.addWordsScreen.AddWordsScreenFragment
 import com.example.presentation.screens.base.BaseFragment
-import com.example.utilites.getDrawableCompat
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -26,13 +21,9 @@ class GameConfigScreenFragment : BaseFragment(R.layout.fragment_game_config_scre
 
     private lateinit var viewModel: GameConfigScreenViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = obtainViewModel()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = obtainViewModel()
         binding = FragmentGameConfigScreenBinding.bind(view)
 
 //        binding.toolbar.navigationIcon = getDrawableCompat(android.R.drawable.)
@@ -45,7 +36,7 @@ class GameConfigScreenFragment : BaseFragment(R.layout.fragment_game_config_scre
         }
 
         binding.word.setOnClickListener {
-            router.navigateTo(AddWordsScreenFragment.Screen())
+            router.navigateTo(AddWordsScreenFragment.Screen(""))
         }
 
         binding.toolbar.title = "SETTINGS"

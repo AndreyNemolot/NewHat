@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.people.PeopleRepository
 import com.example.domain.model.Player
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,7 +18,7 @@ class AddPeopleScreenViewModel @Inject constructor(
 
     private var stateAddPeople: AddPeopleScreenState = AddPeopleScreenState()
     val stateFlow = MutableStateFlow(AddPeopleScreenState())
-//    val commandFlow = MutableSharedFlow<Command>()
+    val commandFlow = MutableSharedFlow<AddPlayerCommand>()
 
 
     init {
@@ -27,20 +28,27 @@ class AddPeopleScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun addPlayer(player: String) {
-        peopleRepository.addPeople(
-            Player(name = player)
-        )
+    fun addPlayer(playerName: String) {
+        if(playerName.isBlank()) {
+            commandFlow.tryEmit(AddPlayerCommand.AddPlayerError)
+        } else {
+            peopleRepository.addPeople(
+                Player(name = playerName)
+            )
+        }
     }
 
-    fun removePeople(name: String) {
-        peopleRepository.removePeople(
-            Player(name)
-        )
+    fun removePeople(idx: Int) {
+        val name = peopleRepository.getPlayers().getOrNull(idx)
+        if (name != null) {
+            peopleRepository.removePeople(name)
+        } else {
+            commandFlow.tryEmit(AddPlayerCommand.RemovePlayerError)
+        }
     }
 
     fun getPeople() {
-         peopleRepository.getPeople()
+         peopleRepository.getPlayers()
     }
 
 }

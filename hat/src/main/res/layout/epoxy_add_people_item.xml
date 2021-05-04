@@ -14,6 +14,8 @@
         android:hint="@string/add"
         android:padding="8dp"
         android:textSize="20sp"
+        android:inputType="textCapWords|textCapSentences|textAutoCorrect"
+        android:imeOptions="actionSend"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/addPlayer"
         app:layout_constraintStart_toStartOf="parent"

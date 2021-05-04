@@ -1,8 +1,10 @@
 package com.example.data.people
 
 import com.example.domain.model.Player
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
@@ -12,12 +14,13 @@ class PeopleRepository @Inject constructor() {
     private val state_: MutableStateFlow<List<Player>> = MutableStateFlow(emptyList())
     val state: Flow<List<Player>> = state_
 
-    init {
-        println("ASDASD 1")
+    fun getPlayers(): List<Player> {
+        return playerSet.map { Player(name = it.name) }.toList()
     }
 
-    fun getPeople(): List<Player> {
-        return playerSet.map { Player(name = it.name) }.toList()
+    fun getPlayerByName(playerName: String): Player {
+        val player = playerSet.findLast { it.name == playerName }
+        return requireNotNull(player) { "Doesn't find $playerName player" }
     }
 
     fun addPeople(playerName: Player) {

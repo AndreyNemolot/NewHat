@@ -1,7 +1,6 @@
 package com.example.presentation.screens.addPeopleScreen.epoxy
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.example.domain.model.Player
 import com.example.presentation.screens.addPeopleScreen.AddPeopleScreenState
 
 class EpoxyPeopleController(
@@ -19,12 +18,15 @@ class EpoxyPeopleController(
             peopleEpoxyItem {
                 id("PEOPLE_${people.name}")
                 people(people.name)
+                listener(playerListener)
             }
         }
     }
 
     interface PlayerListener {
         fun addPlayer(name: String)
+        fun addWord(name: String)
+
     }
 
 }
