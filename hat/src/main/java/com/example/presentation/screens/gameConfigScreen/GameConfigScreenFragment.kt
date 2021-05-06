@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.presentation.R
+import com.example.presentation.commandsScreen.CommandsScreenFragment
 import com.example.presentation.databinding.FragmentGameConfigScreenBinding
 import com.example.presentation.screens.addPeopleScreen.AddPeopleScreenFragment
 import com.example.presentation.screens.addWordsScreen.AddWordsScreenFragment
@@ -37,6 +38,10 @@ class GameConfigScreenFragment : BaseFragment(R.layout.fragment_game_config_scre
 
         binding.word.setOnClickListener {
             router.navigateTo(AddWordsScreenFragment.Screen(""))
+        }
+
+        binding.commands.setOnClickListener {
+            router.navigateTo(CommandsScreenFragment.Screen())
         }
 
         binding.toolbar.title = "SETTINGS"

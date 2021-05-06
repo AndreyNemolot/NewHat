@@ -1,11 +1,12 @@
 package com.example.domain.interactor
 
+import com.example.data.people.PeopleRepository
 import com.example.domain.model.Word
 import javax.inject.Inject
 import kotlin.random.Random
 
 class WordInteractor @Inject constructor(
-    private val playerInteractor: PlayerInteractor
+    private val playerRepository: PeopleRepository
 ) {
 
 //    val guessedWord: MutableList<Word> = mutableListOf()
@@ -13,7 +14,7 @@ class WordInteractor @Inject constructor(
 
 
     fun invalidate() {
-        val playerWords = playerInteractor.getPlayer().flatMap { player ->
+        val playerWords = playerRepository.getPlayers().flatMap { player ->
             player.getWords()
         }
 //        guessedWord.clear()

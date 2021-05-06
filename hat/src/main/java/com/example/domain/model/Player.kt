@@ -5,22 +5,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 data class Player(
     val name: String
-) {
+): WordStore {
     private var words: MutableSet<Word> = mutableSetOf()
     private val channel: MutableStateFlow<List<Word>> = MutableStateFlow(listOf())
-    val wordState: Flow<List<Word>> = channel
+    override val wordState: Flow<List<Word>> = channel
 
-    fun addWord(word: Word) {
+    override fun addWord(word: Word) {
         words.add(word)
         channel.tryEmit(words.toList())
     }
 
-    fun removeWord(word: Word) {
+    override fun removeWord(word: Word) {
         words.remove(word)
         channel.tryEmit(words.toList())
     }
 
-    fun getWords(): List<Word> {
+    override fun getWords(): List<Word> {
         return words.toList()
     }
 }

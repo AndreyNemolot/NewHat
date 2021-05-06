@@ -2,20 +2,18 @@ package com.example.presentation.screens.addWordsScreen
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.presentation.R
+import com.example.presentation.commonView.CommonItemDecoration
 import com.example.presentation.commonView.WordPopup
 import com.example.presentation.databinding.FragmentAddWordsScreenBinding
+import com.example.presentation.screens.addWordsScreen.epoxy.EpoxyWordController
+import com.example.presentation.screens.addWordsScreen.epoxy.SafeFlexboxLayoutManager
 import com.example.presentation.screens.base.BaseFragment
-import com.example.utilites.dpToPix
-import com.example.utilites.getColor
-import com.example.utilites.getDrawable
-import com.google.android.flexbox.FlexboxLayout
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.JustifyContent
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -27,6 +25,7 @@ class AddWordsScreenFragment : BaseFragment(R.layout.fragment_add_words_screen),
 
     private lateinit var binding: FragmentAddWordsScreenBinding
     private lateinit var viewModel: AddWordsScreenViewModel
+    private val controller = EpoxyWordController(this)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,13 +34,25 @@ class AddWordsScreenFragment : BaseFragment(R.layout.fragment_add_words_screen),
             val playerName = requireArguments().getString(PLAYER_NAME)
             it.initialize(requireNotNull(playerName))
         }
+
         launchWhenCreated {
             viewModel.stateFlow.collect {
                 updateState(it)
             }
         }
+
         binding.addButton.setOnClickListener {
             addWord(binding.textInputEditText.text.toString())
+        }
+
+        val lm = SafeFlexboxLayoutManager(requireContext()).also {
+            it.justifyContent = JustifyContent.FLEX_START
+            it.flexWrap = FlexWrap.WRAP
+        }
+        binding.recycleView.apply {
+            layoutManager = lm
+            addItemDecoration(CommonItemDecoration(6f, 8f))
+            setController(controller)
         }
 
         binding.textInputEditText.setOnEditorActionListener { v, actionId, event ->
@@ -66,39 +77,11 @@ class AddWordsScreenFragment : BaseFragment(R.layout.fragment_add_words_screen),
     }
 
     private fun updateState(stateAddWord: AddWordScreenState) {
-        binding.flexBox.removeAllViews()
-        stateAddWord.wordList.forEach {
-            addWordToFlexBox(it.word)
-        }
-    }
-
-    private fun addWordToFlexBox(people: String) {
-        val word = TextView(requireContext())
-        word.text = people
-        word.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24.toFloat())
-        word.gravity = Gravity.CENTER
-        val drawable = getDrawable(R.drawable.text_view_people_badge)
-        word.background = drawable
-
-        word.setTextColor(getColor(android.R.color.white))
-        word.setPadding(dpToPix(5f), dpToPix(5f), dpToPix(5f), dpToPix(5f))
-
-        val lpRight = FlexboxLayout.LayoutParams(
-            FlexboxLayout.LayoutParams.WRAP_CONTENT,
-            FlexboxLayout.LayoutParams.WRAP_CONTENT
-        )
-        lpRight.setMargins(dpToPix(5f), dpToPix(5f), dpToPix(5f), dpToPix(5f))
-        word.layoutParams = lpRight
-        word.setOnLongClickListener {
-            WordPopup(requireContext(), this).show(it, people)
-            true
-        }
-        binding.flexBox.addView(word)
+        controller.setData(stateAddWord.wordList)
     }
 
     override fun remove(people: String) {
         viewModel.removePeople(people)
-
     }
 
     override fun edit(people: String) {

@@ -14,7 +14,7 @@ import com.example.utilites.dpToPixSize
 import com.example.utilites.getDrawableCompat
 import kotlinx.android.extensions.LayoutContainer
 
-class WordPopup(context: Context, val listener: PopupListener) : PopupWindow(context),
+class WordPopup(context: Context, val listener: PopupListener?) : PopupWindow(context),
     LayoutContainer {
 
     override val containerView: View
@@ -45,11 +45,11 @@ class WordPopup(context: Context, val listener: PopupListener) : PopupWindow(con
         )
 
         vb.removeButton.setOnClickListener {
-            listener.remove(people)
+            listener?.remove(people)
             dismiss()
         }
         vb.editButton.setOnClickListener {
-            listener.edit(people)
+            listener?.edit(people)
             dismiss()
         }
     }

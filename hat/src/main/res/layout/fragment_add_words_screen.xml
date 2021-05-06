@@ -20,25 +20,19 @@
             app:navigationIcon="?attr/homeAsUpIndicator" />
     </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/recycleView"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="0dp"
             android:layout_margin="20dp"
+            android:layout_marginBottom="60dp"
             android:background="@color/white"
             app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
 
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/flexBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:flexWrap="wrap"
-                app:justifyContent="flex_start">
-            </com.google.android.flexbox.FlexboxLayout>
-
-        </FrameLayout>
+        </com.airbnb.epoxy.EpoxyRecyclerView>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textInputEditText"

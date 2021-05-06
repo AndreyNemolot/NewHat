@@ -3,7 +3,6 @@ package com.example.data.people
 import com.example.domain.model.Player
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 
@@ -12,7 +11,7 @@ class PeopleRepository @Inject constructor() {
     private val playerSet: MutableSet<Player> = mutableSetOf()
 
     private val state_: MutableStateFlow<List<Player>> = MutableStateFlow(emptyList())
-    val state: Flow<List<Player>> = state_
+    val state: MutableStateFlow<List<Player>> = state_
 
     fun getPlayers(): List<Player> {
         return playerSet.map { Player(name = it.name) }.toList()
