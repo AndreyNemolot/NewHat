@@ -5,11 +5,12 @@ import android.os.Parcelable
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.presentation.R
-import com.example.presentation.commandsScreen.CommandsScreenFragment
 import com.example.presentation.databinding.FragmentGameConfigScreenBinding
 import com.example.presentation.screens.addPeopleScreen.AddPeopleScreenFragment
-import com.example.presentation.screens.addWordsScreen.AddWordsScreenFragment
 import com.example.presentation.screens.base.BaseFragment
+import com.example.presentation.screens.commandsScreen.CommandsScreenFragment
+import com.example.presentation.screens.gameScreen.GameScreenFragment
+import com.example.presentation.screens.wordsScreen.WordsScreenFragment
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -37,11 +38,15 @@ class GameConfigScreenFragment : BaseFragment(R.layout.fragment_game_config_scre
         }
 
         binding.word.setOnClickListener {
-            router.navigateTo(AddWordsScreenFragment.Screen(""))
+            router.navigateTo(WordsScreenFragment.Screen())
         }
 
         binding.commands.setOnClickListener {
             router.navigateTo(CommandsScreenFragment.Screen())
+        }
+
+        binding.startGame.setOnClickListener {
+            router.navigateTo(GameScreenFragment.Screen())
         }
 
         binding.toolbar.title = "SETTINGS"

@@ -1,7 +1,7 @@
-package com.example.presentation.commandsScreen.epoxy
+package com.example.presentation.screens.commandsScreen.epoxy
 
 import com.airbnb.epoxy.TypedEpoxyController
-import com.example.presentation.commandsScreen.CommandScreenState
+import com.example.presentation.screens.commandsScreen.CommandScreenState
 
 class EpoxyCommandsController(
 ) :TypedEpoxyController<CommandScreenState>() {

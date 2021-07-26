@@ -11,4 +11,6 @@ interface WordStore {
     fun removeWord(word: Word)
 
     fun getWords(): List<Word>
+
+    fun wordsSize(): Int
 }

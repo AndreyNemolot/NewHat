@@ -1,14 +1,14 @@
-package com.example.presentation.commandsScreen
+package com.example.presentation.screens.commandsScreen
 
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.presentation.R
-import com.example.presentation.commandsScreen.epoxy.EpoxyCommandsController
 import com.example.presentation.commonView.CommonItemDecoration
 import com.example.presentation.databinding.FragmentCommandsScreenBinding
 import com.example.presentation.screens.base.BaseFragment
+import com.example.presentation.screens.commandsScreen.epoxy.EpoxyCommandsController
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn

@@ -2,6 +2,8 @@ package com.example.domain.interactor
 
 import com.example.data.people.PeopleRepository
 import com.example.domain.model.Word
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import kotlin.random.Random
 
@@ -10,7 +12,15 @@ class WordInteractor @Inject constructor(
 ) {
 
 //    val guessedWord: MutableList<Word> = mutableListOf()
-    val unGuessedWord: MutableList<Word> = mutableListOf()
+    val unguessedWord: MutableList<Word> = mutableListOf()
+    var wordsRestriction: Int = 0
+    set(value) {
+        field = value
+        wordsRestrictionObserver_.tryEmit(value)
+    }
+
+    private val wordsRestrictionObserver_: MutableStateFlow<Int> = MutableStateFlow(wordsRestriction)
+    val wordsRestrictionObserver: Flow<Int> = wordsRestrictionObserver_
 
 
     fun invalidate() {
@@ -18,21 +28,21 @@ class WordInteractor @Inject constructor(
             player.getWords()
         }
 //        guessedWord.clear()
-        unGuessedWord.clear()
-        unGuessedWord.addAll(playerWords)
+        unguessedWord.clear()
+        unguessedWord.addAll(playerWords)
     }
 
     fun guessWord(word: Word) {
-        unGuessedWord.remove(word)
+        unguessedWord.remove(word)
     }
 
     fun nextWord(): Word {
-        val randomIdx = Random.nextInt(0, unGuessedWord.size)
-        return unGuessedWord[randomIdx]
+        val randomIdx = Random.nextInt(0, unguessedWord.size)
+        return unguessedWord[randomIdx]
     }
 
     fun hasWords(): Boolean {
-        return unGuessedWord.isNotEmpty()
+        return unguessedWord.isNotEmpty()
     }
 
 

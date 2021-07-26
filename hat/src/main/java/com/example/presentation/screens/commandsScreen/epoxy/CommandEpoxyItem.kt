@@ -1,4 +1,4 @@
-package com.example.presentation.commandsScreen.epoxy
+package com.example.presentation.screens.commandsScreen.epoxy
 
 import android.content.Context
 import com.airbnb.epoxy.ModelView

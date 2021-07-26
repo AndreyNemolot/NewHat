@@ -1,4 +1,4 @@
-package com.example.presentation.commandsScreen
+package com.example.presentation.screens.commandsScreen
 
 import com.example.domain.model.Command
 

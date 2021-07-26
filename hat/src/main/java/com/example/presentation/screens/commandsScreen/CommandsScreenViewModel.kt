@@ -1,4 +1,4 @@
-package com.example.presentation.commandsScreen
+package com.example.presentation.screens.commandsScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

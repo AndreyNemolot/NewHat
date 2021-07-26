@@ -23,4 +23,8 @@ data class Player(
     override fun getWords(): List<Word> {
         return words.toList()
     }
+
+    override fun wordsSize(): Int {
+        return words.size
+    }
 }
